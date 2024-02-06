@@ -1,6 +1,7 @@
 #include "BBTimer.hpp"
 #include "mbed.h"
 #include <Streaming.h>
+#include <Wire.h>
 
 BBTimer my_t0(BB_TIMER0); // tareas 2 y 3
 BBTimer my_t1(BB_TIMER1); // tarea 4
