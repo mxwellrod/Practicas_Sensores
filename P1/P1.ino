@@ -4,7 +4,6 @@
 #include <Wire.h>
 
 BBTimer my_t0(BB_TIMER0); // tareas 2 y 3
-BBTimer my_t1(BB_TIMER1); // tarea 4
 
 int sensorValue = 0;
 const byte PWMPin = 5; // Arduino pin number
@@ -22,13 +21,6 @@ void t0Callback()
   // Tareas 2 y 3
   readEN2 = ~readEN2; // not. Con booleanos no va ns porque
 }
-
-void t1Callback()
-{
-  // Tareas 2 y 3
-  readEN2 = ~readEN2; // not. Con booleanos no va ns porque
-}
-
 
 void setup() {
 
@@ -81,12 +73,12 @@ void loop() {
 
         if(strncmp(msg, "ADC", 3) == 0){
           int t = data*1000000;
-          my_t1.setupTimer(t, t1Callback);
-	        my_t1.timerStart();
+          my_t0.setupTimer(t, t0Callback);
+	        my_t0.timerStart();
         }
         else if(strncmp(msg, "PWM", 3) == 0){
           // Cambiar duty
-          pwmPin.write((float)data/ 9.0); // Duty va de 0 a 9 -> Son enteros o no??
+          pwmPin.write(1.0); // Duty va de 0 a 9 -> Son enteros o no?? (float)data/ 9.0
         }
       }
 
