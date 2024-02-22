@@ -8,6 +8,8 @@
 BBTimer my_t0(BB_TIMER0); // tareas 2 y 3
 byte EN = 0x00;
 float acc[3] = {0.0, 0.0, 0.0};
+float gyro[3] = {0.0, 0.0, 0.0};
+float mag[3] = {0.0, 0.0, 0.0};
 
 void t0Callback()
 {
@@ -18,7 +20,7 @@ void t0Callback()
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  my_t0.setupTimer(50000, t0Callback);
+  my_t0.setupTimer(500000, t0Callback);
 	my_t0.timerStart();
 
   if (!IMU.begin()) {
@@ -32,8 +34,16 @@ void loop() {
   if(EN){
     if (IMU.accelerationAvailable()) {
       IMU.readAcceleration(acc[0], acc[1], acc[2]);
-      Serial.print("Valor x ACC #");
-      Serial.println(acc[0]);
+      Serial << "Valor ACC " << acc[0] << ", " << acc[1] << ", " << acc[2] << endl;
     }
+    if (IMU.gyroscopeAvailable()) {
+      IMU.readGyroscope(gyro[0], gyro[1], gyro[2]);
+      Serial << "Valor GYRO " << gyro[0] << ", " << gyro[1] << ", " << gyro[2] << endl;
+    }
+    if (IMU.magneticFieldAvailable()) {
+      IMU.readMagneticField(mag[0], mag[1], mag[2]);
+      Serial << "Valor MAG " << mag[0] << ", " << mag[1] << ", " << mag[2] << endl;
+    }
+  EN = 0x00;
   }
 }
