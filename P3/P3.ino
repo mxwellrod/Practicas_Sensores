@@ -20,7 +20,7 @@ void t0Callback()
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  my_t0.setupTimer(500000, t0Callback);
+  my_t0.setupTimer(100000, t0Callback);
 	my_t0.timerStart();
 
   if (!IMU.begin()) {
@@ -34,15 +34,11 @@ void loop() {
   if(EN){
     if (IMU.accelerationAvailable()) {
       IMU.readAcceleration(acc[0], acc[1], acc[2]);
-      Serial << "Valor ACC " << acc[0] << ", " << acc[1] << ", " << acc[2] << endl;
+      Serial <<  acc[0] << ", " << -acc[1] << ", " << acc[2] << endl;
     }
     if (IMU.gyroscopeAvailable()) {
       IMU.readGyroscope(gyro[0], gyro[1], gyro[2]);
-      Serial << "Valor GYRO " << gyro[0] << ", " << gyro[1] << ", " << gyro[2] << endl;
-    }
-    if (IMU.magneticFieldAvailable()) {
-      IMU.readMagneticField(mag[0], mag[1], mag[2]);
-      Serial << "Valor MAG " << mag[0] << ", " << mag[1] << ", " << mag[2] << endl;
+      Serial <<  -gyro[0] << ", " << -gyro[1] << ", " << -gyro[2] << endl;
     }
   EN = 0x00;
   }
