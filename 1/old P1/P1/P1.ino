@@ -43,7 +43,7 @@ void loop() {
     sensorValue = analogRead(A0);
     Serial.println(sensorValue);
     readEN2 = ~readEN2;
-    //pwmPin.write((float)sensorValue/ 1023.0); // Duty actualizado
+    pwmPin.write((float)sensorValue/ 1023.0); // Duty actualizado
   }
 
   // Tarea 4: UART
